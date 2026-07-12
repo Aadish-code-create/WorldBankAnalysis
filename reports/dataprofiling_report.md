@@ -1,156 +1,213 @@
-# **Data Profiling and Ingestion Report**
+# World Economic Indicators Analysis
+## Stage 1: Data Ingestion & Profiling Report
 
-## **Executive Summary**
-## Executive Summary
-This report presents the initial profiling of three raw datasets used in the World Economic Indicators Analytics project.
+---
+
+# Executive Summary
+
+This report presents the initial profiling of three raw datasets used in the **World Economic Indicators Analysis** project.
+
 The objective of this stage was to assess the quality, completeness, and structure of the data before performing any cleaning or transformation.
-The profiling process included schema inspection, descriptive statistics, missing value assessment, duplicate detection, and integrity validation.
+
+The profiling process included:
+
+- Data ingestion
+- Schema inspection
+- Descriptive statistics
+- Missing value assessment
+- Duplicate detection
+- Data integrity validation
+
 The findings indicate that all datasets were successfully ingested. While several indicator variables contain substantial missing values, identifier fields remain complete and no duplicate observations were detected. Overall, the datasets are suitable for the data cleaning stage.
 
-## **Data Overview**
-| Dataset         |   Rows | Columns | Format   |
-| --------------- | -----: | ------: | -------- |
-| World Bank      | 12,449 |      15 | Long     |
-| HDI             |    206 |   1,008 | Wide     |
-| Data Dictionary |     58 |       3 | Metadata |
+---
 
+# Dataset Overview
 
-## **Data Schema**
-### **World Bank**
-<class 'pandas.DataFrame'>
-RangeIndex: 12449 entries, 0 to 12448
-dtypes: float64(10), int64(1), str(4)
-memory usage: 2.0 MB
+| Dataset | Rows | Columns | Structure |
+|---------|-----:|--------:|-----------|
+| World Bank | 12,449 | 15 | Long |
+| HDI | 206 | 1,008 | Wide |
+| Data Dictionary | 58 | 3 | Metadata |
 
-         |Country Name|  Country Code	|  Region	          |  IncomeGroup       |
----------|-----------:|:---------------:|:-------------------:|--------------------|
-count	 |  12449     |   12449	        |   12449	          |      12449         |
-unique	 |   211      |    211	        |     7	              |        5           |
-top	     | Afghanistan|	   AFG	        |Europe & Central Asia|	Upper middle income|
-freq	 |   59	      |    59	     	|   3304              |      3127          |
+---
 
-World Bank has **15** variables, **4** categorical columns, **1** integer column and **10** numeric indicators.
+# Dataset Structure
 
-### **HDI**
-<class 'pandas.DataFrame'>
-RangeIndex: 206 entries, 0 to 205
-Columns: 1008 entries, iso3 to mf_2021
-dtypes: float64(1004), str(4)
-memory usage: 1.6 MB
+## World Bank Dataset
 
-     	| iso3        | country  	| hdicode   |	region  |
---------|------------:|:-----------:|:---------:|----------:|
-count	|   206	      |    206	    |   191	    |    151    |
-unique	|   206	      |    206	    |    4	    |     6     |
-top		|   AFG       |	Afghanistan | Very High |	 SSA    |
-freq	|    1	      |    1        |	 66	    |     46    |
+| Attribute | Value |
+|-----------|------|
+| Rows | 12,449 |
+| Columns | 15 |
+| Numeric Variables | 10 |
+| Integer Variables | 1 |
+| Categorical Variables | 4 |
+| Memory Usage | 2.0 MB |
 
+### Categorical Variables
 
+| Column | Unique Values | Most Frequent |
+|---------|--------------:|---------------|
+| Country Name | 211 | Afghanistan |
+| Country Code | 211 | AFG |
+| Region | 7 | Europe & Central Asia |
+| Income Group | 5 | Upper Middle Income |
 
-### **Dictionary**
-<class 'pandas.DataFrame'>
-RangeIndex: 58 entries, 0 to 57
-Data columns (total 3 columns):
- #   Column       Non-Null Count  Dtype
----  ------       --------------  -----
- 0   Table        58 non-null     str  
- 1   Field        58 non-null     str  
- 2   Description  58 non-null     str  
-dtypes: str(3)
-memory usage: 5.3 KB
+---
 
-## **Missing Value Assessment**
-### **World Bank**
-	                                                          | Missing Values	|Missing % |
---------------------------------------------------------------|:---------------:|---------:|                            Individuals using the Internet (% of population)	          |           7385	|    59.32 |
-Unemployment (% of total labor force) (modeled ILO estimate)  |	          7241	|    58.17 |
-Electric power consumption (kWh per capita)	                  |           6601	|    53.02 |
-GDP per capita (USD)	                                      |           2874	|    23.09 |
-GDP (USD)	                                                  |           2871	|    23.06 |
-Infant mortality rate (per 1,000 live births)	              |           2465	|    19.80 |
-Life expectancy at birth (years)	                          |           1273	|    10.23 |
-Death rate, crude (per 1,000 people)	                      |           1033	|    8.30  |
-Birth rate, crude (per 1,000 people)	                      |           1009	|    8.11  |
-Population density (people per sq. km of land area)	          |            604	|    4.85  |
-IncomeGroup	                                                  |              0	|    0.00  |
-Country Name	                                              |              0	|    0.00  |
-Year	                                                      |              0	|    0.00  |
-Country Code	                                              |              0	|    0.00  |
-Region	                                                      |              0	|    0.00  |
+## HDI Dataset
 
-Three variables contain more than **50%** missing values:
-- **Internet Usage**
-- **Electricity Consumption**
-- **Unemployment**
+| Attribute | Value |
+|-----------|------|
+| Rows | 206 |
+| Columns | 1,008 |
+| Numeric Variables | 1,004 |
+| Categorical Variables | 4 |
+| Memory Usage | 1.6 MB |
 
-**GDP** and **GDP per Capita** contain approximately **23%** missing values and therefore require careful treatment during Stage 2. All identifier variables contain complete information, making them reliable keys for downstream integration.
+### Categorical Variables
 
-### **HDI**        
-                   | Missing Values	|  Missing %  |
--------------------|:--------------:|------------:|           
-gdi_1992	       |             87 |	42.23     |
-hdi_f_1990	       |             87 |	42.23     |
-hdi_f_1991	       |             87 |	42.23     |
-hdi_f_1992	       |             87 |	42.23     |
-hdi_m_1990	       |             87 |	42.23     |
-hdi_m_1992	       |             87 |	42.23     |
-gdi_1991	       |             87 |	42.23     |
-gdi_1990	       |             87 |	42.23     |
-hdi_m_1991	       |             87 |	42.23     |
-hdi_f_1993	       |             86 |	41.75     |
-gdi_1993	       |             86 |	41.75     |
-hdi_m_1994	       |             86 |	41.75     |
-hdi_f_1994	       |             86 |	41.75     |
-hdi_m_1993	       |             86 |	41.75     |
-gdi_1994	       |             86 |	41.75     |
-loss_2010	       |             82 |	39.81     |
-ihdi_2010	       |             82 |	39.81     |
-coef_ineq_2010	   |             82 |	39.81     |
-diff_hdi_phdi_1990 |	         81 |	39.32     |
-phdi_1990	       |             81 |	39.32     |
+| Column | Unique Values | Most Frequent |
+|---------|--------------:|---------------|
+| ISO3 | 206 | AFG |
+| Country | 206 | Afghanistan |
+| HDI Code | 4 | Very High |
+| Region | 6 | SSA |
 
-Due to size constraints only top 20 columns with most missing values are considered. Amongst them these shows maximum missing values %:
-- **gdi_1992**	       
-- **hdi_f_1990**	      
-- **hdi_f_1991**	      
-- **hdi_f_1992**	     
-- **hdi_m_1990**	       
-- **hdi_m_1992**	       
-- **gdi_1991**	       
-- **gdi_1990**
-- **hdi_m_1991**
+---
 
-## **Duplicate Analysis**
-### **World Bank**
-Unique Row Count:
-Country Name = 211
-Country Code = 211
-Region = 7
-Year = 59
-Income Group = 5 
+## Data Dictionary
 
-### **HDI**
-Unique Row Count:
-Country Name = 206
-iso3 = 206
-Region = 6
+| Attribute | Value |
+|-----------|------|
+| Rows | 58 |
+| Columns | 3 |
+| Missing Values | 0 |
+| Purpose | Metadata describing dataset variables |
 
-### **No duplicate observations were identified in any of the three datasets.**
+---
 
-## **Integrity Check**
-minimum value in 'Year' = 1960 
-maximum value in 'Year' = 2018
-minimum value in GDP (USD) = 8824450.0
-minimum value in Population density = 0.0986245
-unique(country code) * unique(year) = Len(world bank) = 12449
+# Missing Value Assessment
 
-The World Bank dataset contains **211** unique countries observed across **59 years**.
-The product of **unique Country Codes** and **unique Years** equals the total number of observations (211 × 59 = 12,449), confirming that each Country-Year combination appears exactly once.
+## World Bank Dataset
 
-## **Conclusion**
+| Variable | Missing Values | Missing % |
+|----------|---------------:|----------:|
+| Individuals using the Internet (% of population) | 7,385 | 59.32% |
+| Unemployment (% of total labor force) (modeled ILO estimate) | 7,241 | 58.17% |
+| Electric power consumption (kWh per capita) | 6,601 | 53.02% |
+| GDP per capita (USD) | 2,874 | 23.09% |
+| GDP (USD) | 2,871 | 23.06% |
+| Infant mortality rate (per 1,000 live births) | 2,465 | 19.80% |
+| Life expectancy at birth (years) | 1,273 | 10.23% |
+| Death rate, crude (per 1,000 people) | 1,033 | 8.30% |
+| Birth rate, crude (per 1,000 people) | 1,009 | 8.11% |
+| Population density (people per sq. km of land area) | 604 | 4.85% |
+
+### Observations
+
+- Three variables contain more than **50%** missing values:
+  - Internet Usage
+  - Electricity Consumption
+  - Unemployment
+
+- GDP and GDP per Capita contain approximately **23%** missing values and therefore require careful treatment during Stage 2.
+
+- Identifier variables (**Country Name, Country Code, Region, Income Group, and Year**) contain **no missing values**, making them reliable keys for downstream integration.
+
+---
+
+## HDI Dataset
+
+Only the top 20 variables with the highest missing values are reported.
+
+| Variable | Missing % |
+|----------|----------:|
+| gdi_1992 | 42.23% |
+| hdi_f_1990 | 42.23% |
+| hdi_f_1991 | 42.23% |
+| hdi_f_1992 | 42.23% |
+| hdi_m_1990 | 42.23% |
+| hdi_m_1992 | 42.23% |
+| gdi_1991 | 42.23% |
+| gdi_1990 | 42.23% |
+| hdi_m_1991 | 42.23% |
+| hdi_f_1993 | 41.75% |
+| gdi_1993 | 41.75% |
+| hdi_m_1994 | 41.75% |
+| hdi_f_1994 | 41.75% |
+| hdi_m_1993 | 41.75% |
+| gdi_1994 | 41.75% |
+| loss_2010 | 39.81% |
+| ihdi_2010 | 39.81% |
+| coef_ineq_2010 | 39.81% |
+| diff_hdi_phdi_1990 | 39.32% |
+| phdi_1990 | 39.32% |
+
+### Observations
+
+The highest missing values are concentrated primarily within historical HDI and Gender Development Index indicators. Due to the large number of variables, only the twenty variables with the greatest percentage of missing values are presented.
+
+---
+
+# Duplicate Analysis
+
+## World Bank
+
+| Attribute | Unique Values |
+|-----------|--------------:|
+| Country Name | 211 |
+| Country Code | 211 |
+| Region | 7 |
+| Year | 59 |
+| Income Group | 5 |
+
+---
+
+## HDI
+
+| Attribute | Unique Values |
+|-----------|--------------:|
+| Country | 206 |
+| ISO3 | 206 |
+| Region | 6 |
+
+### Observation
+
+No duplicate observations were identified in any of the three datasets.
+
+---
+
+# Data Integrity Assessment
+
+## World Bank Validation
+
+| Validation | Result |
+|------------|--------|
+| Minimum Year | 1960 |
+| Maximum Year | 2018 |
+| Minimum GDP | 8,824,450 |
+| Minimum Population Density | 0.0986245 |
+
+### Candidate Key Validation
+
+- Unique Countries = **211**
+- Unique Years = **59**
+- 211 × 59 = **12,449**
+
+This exactly matches the total number of observations, confirming that each **Country–Year** combination appears exactly once within the dataset.
+
+---
+
+# Conclusion
 
 The data ingestion and profiling stage was completed successfully for all three datasets.
-The World Bank dataset exhibits a consistent Country-Year grain with no duplicate observations and complete identifier fields. Several economic and infrastructure indicators contain substantial missing values, which have been documented for treatment during the cleaning stage.
+
+The World Bank dataset exhibits a consistent **Country–Year** grain with no duplicate observations and complete identifier fields. Several economic and infrastructure indicators contain substantial missing values, which have been documented for treatment during the cleaning stage.
+
 The HDI dataset is structurally different from the World Bank dataset, as it is stored in a wide format where yearly observations are represented as individual columns. This dataset will require reshaping before integration.
-The data dictionary is complete and provides reliable metadata for interpreting variables.
-Overall, the datasets are suitable for further preprocessing. The next stage of the project will focus on cleaning, standardization, and preparation for loading into PostgreSQL.
+
+The Data Dictionary contains complete metadata and provides reliable descriptions for all variables.
+
+Overall, the datasets are suitable for further preprocessing. The next stage of the project will focus on cleaning, standardization, reshaping the HDI dataset, and preparing both datasets for loading into PostgreSQL.
