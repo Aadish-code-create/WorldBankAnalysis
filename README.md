@@ -224,39 +224,41 @@ The analysis revealed several important global development patterns:
 
 ## 🏗️ Repository Structure 
 
+```text
 World-Economic-Indicators-Analytics/
-│
 ├── dashboard/
 │   └── World_Economic_Indicators.pbix
-│
 ├── data/
 │   ├── raw/
 │   ├── interim/
 │   └── processed/
-│
+├── images/
+│   ├── dashboard_overview.png
+│   ├── dashboard_gdp_life_expectancy.png
+│   ├── dashboard_hdi_analysis.png
+│   ├── dashboard_correlation_analysis.png
+│   ├── etl_pipeline.png
+│   └── star_schema.png
 ├── notebooks/
 │   ├── 01_Data_Profiling.ipynb
 │   └── 02_Data_Cleaning.ipynb
-│
 ├── reports/
 │   ├── 01_Data_Profiling_Report.md
 │   ├── 02_Data_Cleaning_Report.md
 │   └── 03_Data_Modeling_Report.md
-│
 ├── sql/
 │   ├── 01_Data_Loading.sql
 │   ├── 02_Data_Modeling.sql
 │   ├── 03_Business_Query_01.sql
 │   ├── 04_Business_Query_02.sql
 │   └── 05_Business_Query_03.sql
-│
 ├── src/
 │   └── __init__.py
-│
 ├── requirements.txt
 ├── .gitignore
 ├── LICENSE
 └── README.md
+```
 
 ## 🛠️ Tech Stack
 
